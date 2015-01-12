@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+# -*- mode: ruby -*-
+
+require_relative 'lib/nexus'
+
+puts ARGV
+
+# Display version and exit
+if ARGV.include?("-v") || ARGV.include?("--version")
+    puts "Titon Nexus #{Titon::Nexus::VERSION}"
+    exit 0
+end
+
+# Run the CLI tool
+nexus = Titon::Nexus.new
+nexus.run()
+
+exit 0
