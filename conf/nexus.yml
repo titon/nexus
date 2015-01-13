@@ -1,3 +1,5 @@
+---
+
 # Vagrant
 ip: 192.168.13.37
 memory: 4096
@@ -13,10 +15,9 @@ vars:
   - key: APP_ENV
     value: local
 
-# Synced Folders
-folders:
-  - from: .
-    to: /vagrant/
-
-# Site Hosts
-sites:
+# Synced Projects
+projects:
+  - source: .
+    target: /vagrant/
+    host: name.app
+    root:

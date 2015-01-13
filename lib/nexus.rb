@@ -1,22 +1,23 @@
-require 'optparse'
-require 'ostruct'
+Dir[File.dirname(__FILE__) + "/nexus/*.rb"].each { |file| require file }
+
+require 'yaml'
 
 module Titon
-    class Nexus
+    module Nexus
         VERSION = File.read(File.expand_path("../../version.md", __FILE__))
 
-        def initialize()
-            @options = OpenStruct.new
+        class Console
+            def self.getYamlConfigPath()
+                return File.expand_path("../../.nexus/nexus.yml", __FILE__)
+            end
 
-            OptionParser.new do |opts|
-              opts.banner = "Usage: nexus [options] COMMAND"
+            def self.loadYamlConfig()
+                return YAML.load_file(getYamlConfigPath())
+            end
 
-              opts.on("--[no-]option VALUE", "Description") { |o| @options[:a] = o }
-            end.parse!
-        end
-
-        def run()
-            puts @options
+            def self.updateYamlConfig(data)
+                return File.open(getYamlConfigPath(), 'w') {|f| f.write(data) }
+            end
         end
     end
 end

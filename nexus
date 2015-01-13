@@ -1,18 +1,121 @@
 #!/usr/bin/env ruby
-# -*- mode: ruby -*-
 
+require 'escort'
 require_relative 'lib/nexus'
 
-puts ARGV
+Escort::App.create do |app|
+    app.version Titon::Nexus::VERSION
+    app.summary "Titon Nexus"
+    app.description "A Vagrant development environment with built-in project management."
 
-# Display version and exit
-if ARGV.include?("-v") || ARGV.include?("--version")
-    puts "Titon Nexus #{Titon::Nexus::VERSION}"
-    exit 0
+    # Initialization
+    app.command :init do |command|
+        command.summary "Initialize Nexus"
+        command.description "Initialize the Nexus environment by creating all required configuration files."
+
+        command.action do |options, arguments|
+            Titon::Nexus::InitCommand.new(options, arguments).execute
+        end
+    end
+
+    # Project management
+    app.command :project do |command|
+        command.summary "Manage projects"
+        command.description "Manage projects by syncing Vagrant folders and creating nginx hosts."
+
+        # Add project
+        command.command :add do |command|
+            command.summary "Add a new project"
+
+            command.description "Add a new project by providing the source folder as the 1st argument,\n" +
+                "and an optional destination folder as the 2nd argument. If no destination folder is provided,\n" +
+                "the project will be synced into the Vagrant users home folder.\n\n" +
+
+                "A unique nginx hostname can be provided using the `--hostname` option.\n" +
+                "If no hostname is provided, the name of the source folder + '.app' will be used.\n\n" +
+
+                "If the root of the source folder is not the public webroot,\n" +
+                "a relative folder path can be provided using the `--webroot` option."
+
+            command.requires_arguments
+
+            command.options do |opts|
+                opts.opt :option1, "Hostname to use for nginx", :short => '-h', :long => '--hostname', :type => :string
+                opts.opt :option2, "A relative path to the webroot", :short => '-w', :long => '--webroot', :type => :string
+            end
+
+            command.action do |options, arguments|
+                #MyApp::ExampleCommand.new(options, arguments).execute
+            end
+        end
+
+        # Delete project
+        command.command :delete do |command|
+            command.summary "Delete a project"
+
+            command.description "Delete an existing project by unsyncing the Vagrant destination folder,\n" +
+                "removing the nginx virtual host, and removing the YAML configuration.\n\n" +
+
+                "The unique key (the source folder name) of the project to delete should be passed as the 1st argument."
+
+            command.action do |options, arguments|
+                #MyApp::ExampleCommand.new(options, arguments).execute
+            end
+        end
+
+        # List projects
+        command.command :list do |command|
+            command.summary "List projects"
+
+            command.description "List all projects that have been synced."
+
+            command.action do |options, arguments|
+                #MyApp::ExampleCommand.new(options, arguments).execute
+            end
+        end
+    end
+
+    # Environment variables
+    app.command :var do |command|
+        command.summary "Manage environment variables"
+        command.description "Manage environment variables passed to nginx."
+
+        # Add variable
+        command.command :add do |command|
+            command.summary "Add or update a variable"
+
+            command.description "Add or update an environment variable. The 1st argument is the key, and the 2nd argument is the value."
+
+            command.action do |options, arguments|
+                Titon::Nexus::VarAddCommand.new(options, arguments).execute
+            end
+        end
+
+        # Delete variable
+        command.command :delete do |command|
+            command.summary "Delete variable"
+
+            command.description "Delete an environment variable defined by key. The key name should be passed as the 1st argument."
+
+            command.action do |options, arguments|
+                Titon::Nexus::VarDeleteCommand.new(options, arguments).execute
+            end
+        end
+
+        # List variables
+        command.command :list do |command|
+            command.summary "List variables"
+
+            command.description "List all defined environment variables."
+
+            command.action do |options, arguments|
+                Titon::Nexus::VarListCommand.new(options, arguments).execute
+            end
+        end
+    end
+
+    # Default action
+    app.action do |options, arguments|
+        #MyApp::ExampleCommand.new(options, arguments).execute
+    end
 end
-
-# Run the CLI tool
-nexus = Titon::Nexus.new
-nexus.run()
-
-exit 0
