@@ -18,10 +18,44 @@ Escort::App.create do |app|
         end
     end
 
+    # Reload
+    app.command :reload do |command|
+        command.summary "Reload Nexus".green
+        command.description "Reload the Nexus configuration by re-provisioning the Vagrant instance.".yellow
+
+        command.action do |options, arguments|
+            #Titon::Nexus::ReloadCommand.new(options, arguments).execute
+        end
+    end
+
+    # Up
+    app.command :up do |command|
+        command.summary "Start Vagrant".green
+        command.description "Start up the Vagrant instance.".yellow
+
+        command.action do |options, arguments|
+            #Titon::Nexus::UpCommand.new(options, arguments).execute
+        end
+    end
+
+    # Down
+    app.command :down do |command|
+        command.summary "Stop Vagrant".green
+        command.description "Shutdown the Vagrant instance.".yellow
+
+        command.action do |options, arguments|
+            #Titon::Nexus::DownCommand.new(options, arguments).execute
+        end
+    end
+
     # Project management
     app.command :project do |command|
         command.summary "Manage projects".green
         command.description "Manage projects by syncing Vagrant folders and creating nginx hosts.".yellow
+
+        command.action do |options, arguments|
+            puts `#{__FILE__} project --help`
+        end
 
         # Add project
         command.command :add do |command|
@@ -78,6 +112,10 @@ Escort::App.create do |app|
         command.summary "Manage environment variables".green
         command.description "Manage environment variables passed to nginx.".yellow
 
+        command.action do |options, arguments|
+            puts `#{__FILE__} var --help`
+        end
+
         # Add variable
         command.command :add do |command|
             command.summary "Add or update a variable".green
@@ -114,6 +152,6 @@ Escort::App.create do |app|
 
     # Default action
     app.action do |options, arguments|
-        #MyApp::ExampleCommand.new(options, arguments).execute
+        puts `#{__FILE__} --help`
     end
 end
