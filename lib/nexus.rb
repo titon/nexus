@@ -1,6 +1,7 @@
 Dir[File.dirname(__FILE__) + "/nexus/*.rb"].each { |file| require file }
 
 require 'yaml'
+require_relative 'colors'
 
 module Titon
     module Nexus
@@ -16,7 +17,7 @@ module Titon
             end
 
             def self.updateYamlConfig(data)
-                return File.open(getYamlConfigPath(), 'w') {|f| f.write(data) }
+                return File.open(getYamlConfigPath(), 'w') { |f| f.write(data) }
             end
         end
     end

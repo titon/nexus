@@ -3,7 +3,7 @@ module Titon
         class VarDeleteCommand < ::Escort::ActionCommand::Base
             def execute
                 if !arguments[0]
-                    Escort::Logger.output.puts "Variable key required"
+                    puts "Variable key required".red
                     return
                 end
 
@@ -21,7 +21,7 @@ module Titon
                 end
 
                 if index == -1
-                    Escort::Logger.output.puts "No matching variable to delete"
+                    puts "No matching variable to delete".yellow
                     return
                 end
 
@@ -30,7 +30,7 @@ module Titon
 
                 Titon::Nexus::Console.updateYamlConfig(yaml.to_yaml)
 
-                Escort::Logger.output.puts "Deleted environment variable " + arguments[0]
+                puts "Deleted environment variable ".green + arguments[0].yellow
             end
         end
     end

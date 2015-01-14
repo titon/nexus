@@ -5,13 +5,13 @@ require_relative 'lib/nexus'
 
 Escort::App.create do |app|
     app.version Titon::Nexus::VERSION
-    app.summary "Titon Nexus"
-    app.description "A Vagrant development environment with built-in project management."
+    app.summary "Titon Nexus".green
+    app.description "A Vagrant development environment with built-in project management.".yellow
 
     # Initialization
     app.command :init do |command|
-        command.summary "Initialize Nexus"
-        command.description "Initialize the Nexus environment by creating all required configuration files."
+        command.summary "Initialize Nexus".green
+        command.description "Initialize the Nexus environment by creating all required configuration files.".yellow
 
         command.action do |options, arguments|
             Titon::Nexus::InitCommand.new(options, arguments).execute
@@ -20,28 +20,28 @@ Escort::App.create do |app|
 
     # Project management
     app.command :project do |command|
-        command.summary "Manage projects"
-        command.description "Manage projects by syncing Vagrant folders and creating nginx hosts."
+        command.summary "Manage projects".green
+        command.description "Manage projects by syncing Vagrant folders and creating nginx hosts.".yellow
 
         # Add project
         command.command :add do |command|
-            command.summary "Add a new project"
+            command.summary "Add a new project".green
 
-            command.description "Add a new project by providing the source folder as the 1st argument,\n" +
-                "and an optional destination folder as the 2nd argument. If no destination folder is provided,\n" +
-                "the project will be synced into the Vagrant users home folder.\n\n" +
+            command.description "Add a new project by providing the source folder as the 1st argument,\n".yellow +
+                "and an optional destination folder as the 2nd argument. If no destination folder is provided,\n".yellow +
+                "the project will be synced into the Vagrant users home folder.\n\n".yellow +
 
-                "A unique nginx hostname can be provided using the `--hostname` option.\n" +
-                "If no hostname is provided, the name of the source folder + '.app' will be used.\n\n" +
+                "A unique nginx hostname can be provided using the `--hostname` option.\n".yellow +
+                "If no hostname is provided, the name of the source folder + '.app' will be used.\n\n".yellow +
 
-                "If the root of the source folder is not the public webroot,\n" +
-                "a relative folder path can be provided using the `--webroot` option."
+                "If the root of the source folder is not the public webroot,\n".yellow +
+                "a relative folder path can be provided using the `--webroot` option.".yellow
 
             command.requires_arguments
 
             command.options do |opts|
-                opts.opt :option1, "Hostname to use for nginx", :short => '-h', :long => '--hostname', :type => :string
-                opts.opt :option2, "A relative path to the webroot", :short => '-w', :long => '--webroot', :type => :string
+                opts.opt :option1, "Hostname to use for nginx".green, :short => '-h', :long => '--hostname', :type => :string
+                opts.opt :option2, "A relative path to the webroot".green, :short => '-w', :long => '--webroot', :type => :string
             end
 
             command.action do |options, arguments|
@@ -51,12 +51,12 @@ Escort::App.create do |app|
 
         # Delete project
         command.command :delete do |command|
-            command.summary "Delete a project"
+            command.summary "Delete a project".green
 
-            command.description "Delete an existing project by unsyncing the Vagrant destination folder,\n" +
-                "removing the nginx virtual host, and removing the YAML configuration.\n\n" +
+            command.description "Delete an existing project by unsyncing the Vagrant destination folder,\n".yellow +
+                "removing the nginx virtual host, and removing the YAML configuration.\n\n".yellow +
 
-                "The unique key (the source folder name) of the project to delete should be passed as the 1st argument."
+                "The unique key (the source folder name) of the project to delete should be passed as the 1st argument.".yellow
 
             command.action do |options, arguments|
                 #MyApp::ExampleCommand.new(options, arguments).execute
@@ -65,9 +65,9 @@ Escort::App.create do |app|
 
         # List projects
         command.command :list do |command|
-            command.summary "List projects"
+            command.summary "List projects".green
 
-            command.description "List all projects that have been synced."
+            command.description "List all projects that have been synced.".yellow
 
             command.action do |options, arguments|
                 #MyApp::ExampleCommand.new(options, arguments).execute
@@ -77,14 +77,14 @@ Escort::App.create do |app|
 
     # Environment variables
     app.command :var do |command|
-        command.summary "Manage environment variables"
-        command.description "Manage environment variables passed to nginx."
+        command.summary "Manage environment variables".green
+        command.description "Manage environment variables passed to nginx.".yellow
 
         # Add variable
         command.command :add do |command|
-            command.summary "Add or update a variable"
+            command.summary "Add or update a variable".green
 
-            command.description "Add or update an environment variable. The 1st argument is the key, and the 2nd argument is the value."
+            command.description "Add or update an environment variable. The 1st argument is the key, and the 2nd argument is the value.".yellow
 
             command.action do |options, arguments|
                 Titon::Nexus::VarAddCommand.new(options, arguments).execute
@@ -93,9 +93,9 @@ Escort::App.create do |app|
 
         # Delete variable
         command.command :delete do |command|
-            command.summary "Delete variable"
+            command.summary "Delete variable".green
 
-            command.description "Delete an environment variable defined by key. The key name should be passed as the 1st argument."
+            command.description "Delete an environment variable defined by key. The key name should be passed as the 1st argument.".yellow
 
             command.action do |options, arguments|
                 Titon::Nexus::VarDeleteCommand.new(options, arguments).execute
@@ -104,9 +104,9 @@ Escort::App.create do |app|
 
         # List variables
         command.command :list do |command|
-            command.summary "List variables"
+            command.summary "List variables".green
 
-            command.description "List all defined environment variables."
+            command.description "List all defined environment variables.".yellow
 
             command.action do |options, arguments|
                 Titon::Nexus::VarListCommand.new(options, arguments).execute

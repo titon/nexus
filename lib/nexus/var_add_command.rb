@@ -3,12 +3,12 @@ module Titon
         class VarAddCommand < ::Escort::ActionCommand::Base
             def execute
                 if !arguments[0]
-                    Escort::Logger.output.puts "Variable key required"
+                    puts "Variable key required".red
                     return
                 end
 
                 if !arguments[1]
-                    Escort::Logger.output.puts "Variable value required"
+                    puts "Variable value required".red
                     return
                 end
 
@@ -42,9 +42,9 @@ module Titon
                 Titon::Nexus::Console.updateYamlConfig(yaml.to_yaml)
 
                 if append
-                    Escort::Logger.output.puts "Added new environment variable " + arguments[0]
+                    puts "Added new environment variable ".green + arguments[0].yellow
                 else
-                    Escort::Logger.output.puts "Updated environment variable " + arguments[0]
+                    puts "Updated environment variable ".green + arguments[0].yellow
                 end
             end
         end

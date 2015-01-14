@@ -9,18 +9,18 @@ module Titon
                 runtimePath = rootPath + ".nexus/"
 
                 if Dir.exists?(runtimePath)
-                    Escort::Logger.output.puts "Nexus has already been initialized"
+                    puts "Nexus has already been initialized".yellow
                     return
                 end
 
                 if Dir.mkdir(runtimePath)
                     FileUtils.cp(configPath + "nexus.yml", runtimePath + "nexus.yml")
                 else
-                    Escort::Logger.output.puts "Failed to create configuration folder"
+                    puts "Failed to create configuration folder".red
                     return
                 end
 
-                Escort::Logger.output.puts "Successfully initialized Nexus"
+                puts "Successfully initialized Nexus".green
             end
         end
     end

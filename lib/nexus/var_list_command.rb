@@ -5,14 +5,14 @@ module Titon
                 yaml = Titon::Nexus::Console.loadYamlConfig()
 
                 if yaml["vars"] == nil
-                    Escort::Logger.output.puts "No environment variables defined"
+                    puts "No environment variables defined".yellow
                     return
                 end
 
-                Escort::Logger.output.puts "Environment variables"
+                puts "Environment variables".green
 
                 yaml["vars"].each do |var|
-                    Escort::Logger.output.puts "- " + var["key"] + "=" + var["value"]
+                    puts "- " + var["key"].yellow + " = ".gray + var["value"].yellow
                 end
             end
         end
