@@ -28,24 +28,22 @@ Escort::App.create do |app|
             command.summary "Add a new project".green
 
             command.description "Add a new project by providing the source folder as the 1st argument,\n".yellow +
-                "and an optional destination folder as the 2nd argument. If no destination folder is provided,\n".yellow +
-                "the project will be synced into the Vagrant users home folder.\n\n".yellow +
+                "and an optional destination name as the 2nd argument. If no destination name is provided,\n".yellow +
+                "the project will be synced into the Vagrant users home folder using the source base name.\n\n".yellow +
 
                 "A unique nginx hostname can be provided using the `--hostname` option.\n".yellow +
-                "If no hostname is provided, the name of the source folder + '.app' will be used.\n\n".yellow +
+                "If no hostname is provided, the base name of the source folder + '.app' will be used.\n\n".yellow +
 
                 "If the root of the source folder is not the public webroot,\n".yellow +
                 "a relative folder path can be provided using the `--webroot` option.".yellow
 
-            command.requires_arguments
-
             command.options do |opts|
-                opts.opt :option1, "Hostname to use for nginx".green, :short => '-h', :long => '--hostname', :type => :string
-                opts.opt :option2, "A relative path to the webroot".green, :short => '-w', :long => '--webroot', :type => :string
+                opts.opt :hostname, "Hostname to use for nginx".green, :short => '-h', :long => '--hostname', :type => :string
+                opts.opt :webroot, "A relative path to the webroot".green, :short => '-w', :long => '--webroot', :type => :string
             end
 
             command.action do |options, arguments|
-                #MyApp::ExampleCommand.new(options, arguments).execute
+                Titon::Nexus::ProjectAddCommand.new(options, arguments).execute
             end
         end
 
@@ -56,10 +54,10 @@ Escort::App.create do |app|
             command.description "Delete an existing project by unsyncing the Vagrant destination folder,\n".yellow +
                 "removing the nginx virtual host, and removing the YAML configuration.\n\n".yellow +
 
-                "The unique key (the source folder name) of the project to delete should be passed as the 1st argument.".yellow
+                "The hostname of the project to delete should be passed as the 1st argument.".yellow
 
             command.action do |options, arguments|
-                #MyApp::ExampleCommand.new(options, arguments).execute
+                Titon::Nexus::ProjectDeleteCommand.new(options, arguments).execute
             end
         end
 
@@ -70,7 +68,7 @@ Escort::App.create do |app|
             command.description "List all projects that have been synced.".yellow
 
             command.action do |options, arguments|
-                #MyApp::ExampleCommand.new(options, arguments).execute
+                Titon::Nexus::ProjectListCommand.new(options, arguments).execute
             end
         end
     end

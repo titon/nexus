@@ -16,8 +16,4 @@ vars:
     value: local
 
 # Synced Projects
-projects:
-  - source: .
-    target: /vagrant/
-    host: name.app
-    root:
+projects: []

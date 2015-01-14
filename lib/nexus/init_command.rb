@@ -1,10 +1,10 @@
-require 'fileutils'
+require "fileutils"
 
 module Titon
     module Nexus
         class InitCommand < ::Escort::ActionCommand::Base
             def execute
-                rootPath = File.expand_path("../../../", __FILE__) + '/'
+                rootPath = File.expand_path("../../../", __FILE__) + "/"
                 configPath = rootPath + "conf/"
                 runtimePath = rootPath + ".nexus/"
 
