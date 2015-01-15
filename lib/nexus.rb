@@ -8,6 +8,10 @@ module Titon
         VERSION = File.read(File.expand_path("../../version.md", __FILE__))
 
         class Console
+            def self.isInitialized()
+                return Dir.exists?(File.expand_path("../../.nexus/", __FILE__))
+            end
+
             def self.getYamlConfigPath()
                 return File.expand_path("../../.nexus/nexus.yml", __FILE__)
             end
@@ -18,6 +22,12 @@ module Titon
 
             def self.updateYamlConfig(data)
                 return File.open(getYamlConfigPath(), "w") { |f| f.write(data) }
+            end
+
+            def self.runVagrantCommand(command)
+                Dir.chdir(File.expand_path("../../", __FILE__)) {
+                    puts `vagrant #{command}`
+                }
             end
         end
     end

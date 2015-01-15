@@ -98,7 +98,7 @@ module Titon
                 hostName = hostName.downcase.strip.gsub(" ", "-").gsub(/[^\w\-\.]/, "")
 
                 if hostName.index(".") == nil
-                    hostName += ".app"
+                    hostName += ".local"
                 end
 
                 return hostName
@@ -114,7 +114,7 @@ module Titon
                 webroot = webroot.gsub("\\", "/").gsub(/^\/|\/$/, "")
 
                 if webroot
-                    webroot + "/"
+                    webroot += "/"
                 end
 
                 return webroot

@@ -5,7 +5,6 @@ module Titon
         class InitCommand < ::Escort::ActionCommand::Base
             def execute
                 rootPath = File.expand_path("../../../", __FILE__) + "/"
-                configPath = rootPath + "conf/"
                 runtimePath = rootPath + ".nexus/"
 
                 if Dir.exists?(runtimePath)
@@ -14,7 +13,7 @@ module Titon
                 end
 
                 if Dir.mkdir(runtimePath)
-                    FileUtils.cp(configPath + "nexus.yml", runtimePath + "nexus.yml")
+                    FileUtils.cp(rootPath + "nexus.yml", runtimePath + "nexus.yml")
                 else
                     puts "Failed to create configuration folder".red
                     return
