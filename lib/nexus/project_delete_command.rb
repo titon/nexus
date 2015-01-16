@@ -31,6 +31,8 @@ module Titon
                 Titon::Nexus::Console.updateYamlConfig(yaml.to_yaml)
 
                 puts "Deleted project ".green + arguments[0].yellow
+
+                puts "\nRun `nexus reload` to apply your changes".cyan
             end
         end
     end

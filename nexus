@@ -150,6 +150,56 @@ Escort::App.create do |app|
         end
     end
 
+    # Databases
+    app.command :db do |command|
+        command.summary "Manage databases".green
+        command.description "Manage the automatic creation of databases for MySQL and PostgreSQL.".yellow
+
+        command.action do |options, arguments|
+            puts `#{__FILE__} db --help`
+        end
+
+        # Add database
+        command.command :add do |command|
+            command.summary "Add database".green
+
+            command.description "Add a new database that will be automatically created on the next Vagrant reload.\n".yellow +
+                "The database name should be passed as the 1st argument.".yellow
+
+            command.options do |opts|
+                opts.opt :mysql, "Is MySQL".green, :short => '-m', :long => '--mysql', :type => :boolean, :default => false
+                opts.opt :pgsql, "Is PostgreSQL".green, :short => '-p', :long => '--pgsql', :type => :boolean, :default => false
+            end
+
+            command.action do |options, arguments|
+                Titon::Nexus::DbAddCommand.new(options, arguments).execute
+            end
+        end
+
+        # Delete database
+        command.command :delete do |command|
+            command.summary "Delete database".green
+
+            command.description "Delete a database from the configuration. This DOES NOT delete the actual database.\n".yellow +
+                "The database name should be passed as the 1st argument.".yellow
+
+            command.action do |options, arguments|
+                Titon::Nexus::DbDeleteCommand.new(options, arguments).execute
+            end
+        end
+
+        # List databases
+        command.command :list do |command|
+            command.summary "List databases".green
+
+            command.description "List all configured databases.".yellow
+
+            command.action do |options, arguments|
+                Titon::Nexus::DbListCommand.new(options, arguments).execute
+            end
+        end
+    end
+
     # Default action
     app.action do |options, arguments|
         puts `#{__FILE__} --help`

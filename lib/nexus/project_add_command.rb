@@ -58,6 +58,8 @@ module Titon
                 puts "Source: " + sourcePath.yellow + "\n"
                 puts "Target: " + targetPath.yellow + "\n"
                 puts "Webroot: " + webroot.yellow
+
+                puts "\nRun `nexus reload` to apply your changes".cyan
             end
 
             def getSourcePath()

@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'yaml'
 
 Vagrant.configure("2") do |config|
@@ -49,7 +51,15 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision "shell" do |pv|
         pv.inline = "bash /home/vagrant/bin/add-env-vars.sh \"$1\""
-        pv.args = [envVars]
+        pv.args = [ envVars ]
+    end
+
+    # Setup Databases
+    nexus["databases"].each do |db|
+        config.vm.provision "shell" do |pv|
+            pv.inline = "bash /home/vagrant/bin/create-" + db["type"] + "-db.sh $1"
+            pv.args = [ db["name"] ]
+        end
     end
 
     # Setup SSH

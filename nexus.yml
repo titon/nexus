@@ -17,3 +17,6 @@ vars:
 
 # Synced Projects
 projects: []
+
+# Databases
+databases: []

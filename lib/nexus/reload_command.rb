@@ -11,7 +11,7 @@ module Titon
 
                 Titon::Nexus::Console.runVagrantCommand('reload --provision')
 
-                puts "\nBe sure to add your projects to your hosts file!".green
+                puts "\nBe sure to add your project hostnames to your hosts file!".cyan
             end
         end
     end

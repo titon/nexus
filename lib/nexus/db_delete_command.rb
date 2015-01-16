@@ -1,9 +1,9 @@
 module Titon
     module Nexus
-        class VarDeleteCommand < ::Escort::ActionCommand::Base
+        class DbDeleteCommand < ::Escort::ActionCommand::Base
             def execute
                 if !arguments[0]
-                    puts "Variable key required".red
+                    puts "Database name required".red
                     return
                 end
 
@@ -11,9 +11,9 @@ module Titon
                 index = -1
 
                 # Find the index
-                if yaml["vars"] != nil
-                    yaml["vars"].each_with_index do |var, i|
-                        if var["key"] == arguments[0]
+                if yaml["databases"] != nil
+                    yaml["databases"].each_with_index do |db, i|
+                        if db["name"] == arguments[0]
                             index = i
                             break
                         end
@@ -21,16 +21,16 @@ module Titon
                 end
 
                 if index == -1
-                    puts "No matching variable to delete".yellow
+                    puts "No matching database to delete".yellow
                     return
                 end
 
-                # Delete the variable
-                yaml["vars"].delete_at(index)
+                # Delete the database
+                yaml["databases"].delete_at(index)
 
                 Titon::Nexus::Console.updateYamlConfig(yaml.to_yaml)
 
-                puts "Deleted environment variable ".green + arguments[0].yellow
+                puts "Deleted database ".green + arguments[0].yellow
 
                 puts "\nRun `nexus reload` to apply your changes".cyan
             end

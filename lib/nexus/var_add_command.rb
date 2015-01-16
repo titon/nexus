@@ -46,6 +46,8 @@ module Titon
                 else
                     puts "Updated environment variable ".green + arguments[0].yellow
                 end
+
+                puts "\nRun `nexus reload` to apply your changes".cyan
             end
         end
     end
