@@ -1,9 +1,10 @@
 #!/usr/bin/env ruby
 
-require 'yaml'
+require "yaml"
+require_relative "lib/colors"
 
 Vagrant.configure("2") do |config|
-    nexus = YAML.load_file('./.nexus/nexus.yml')
+    nexus = YAML.load_file("./.nexus/nexus.yml")
 
     # Box
     config.vm.box = "titon/nexus"
@@ -28,12 +29,12 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "./bin/", "/home/vagrant/bin/", :mount_options => ["dmode=777", "fmode=666"]
 
     # Setup Projects
-    config.vm.provision "shell", inline: "bash /home/vagrant/bin/cleanup-nginx.sh"
+    config.vm.provision "cleanup-nginx".green, type: "shell", inline: "bash /home/vagrant/bin/cleanup-nginx.sh"
 
     nexus["projects"].each do |project|
         config.vm.synced_folder project["source"], project["target"], :mount_options => ["dmode=777", "fmode=666"]
 
-        config.vm.provision "shell" do |pv|
+        config.vm.provision "add-nginx-host:".green + project["hostname"].yellow, type: "shell" do |pv|
             pv.inline = "bash /home/vagrant/bin/add-nginx-host.sh $1 $2"
             pv.args = [
                 project["hostname"],
@@ -49,14 +50,14 @@ Vagrant.configure("2") do |config|
         envVars += "fastcgi_param  " + var["key"] + "  " + var["value"] + ";\n"
     end
 
-    config.vm.provision "shell" do |pv|
+    config.vm.provision "add-env-vars".green, type: "shell" do |pv|
         pv.inline = "bash /home/vagrant/bin/add-env-vars.sh \"$1\""
         pv.args = [ envVars ]
     end
 
     # Setup Databases
     nexus["databases"].each do |db|
-        config.vm.provision "shell" do |pv|
+        config.vm.provision "add-database:".green + db["name"].yellow, type: "shell" do |pv|
             pv.inline = "bash /home/vagrant/bin/create-" + db["type"] + "-db.sh $1"
             pv.args = [ db["name"] ]
         end
@@ -67,8 +68,8 @@ Vagrant.configure("2") do |config|
     # Setup Aliases
 
     # Update Composer
-    config.vm.provision "shell", inline: "/usr/local/bin/composer selfupdate"
+    config.vm.provision "update-composer".green, type: "shell", inline: "/usr/local/bin/composer selfupdate"
 
     # Restart Services
-    config.vm.provision "shell", inline: "bash /home/vagrant/bin/restart-services.sh"
+    config.vm.provision "restart-services".green, type: "shell", inline: "bash /home/vagrant/bin/restart-services.sh"
 end

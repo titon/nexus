@@ -4,6 +4,11 @@ Titon Nexus is an official Vagrant box that provides an easy to use development 
 that comes pre-packaged for HHVM and Hack development. It bundles a built-in web server, 
 popular databases, packaging tools, and more.
 
+## Requirements ##
+
+* Vagrant 1.7
+* Ruby
+
 ## Specifications ##
 
 * Ubuntu 14.04
