@@ -13,7 +13,16 @@ module Titon
                 end
 
                 if Dir.mkdir(runtimePath)
+
+                    # Configuration
                     FileUtils.cp(rootPath + "nexus.yml", runtimePath + "nexus.yml")
+
+                    # Before script
+                    File.write(runtimePath + "before-provision.sh", "#!/usr/bin/env bash")
+
+                    # After script
+                    File.write(runtimePath + "after-provision.sh", "#!/usr/bin/env bash")
+
                 else
                     puts "Failed to create configuration folder".red
                     return

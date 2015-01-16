@@ -7,7 +7,8 @@ popular databases, packaging tools, and more.
 ## Requirements ##
 
 * Vagrant 1.7
-* Ruby
+* VirtualBox
+* Ruby 1.9
 
 ## Specifications ##
 

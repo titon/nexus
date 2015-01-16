@@ -6,6 +6,8 @@ require_relative "lib/colors"
 Vagrant.configure("2") do |config|
     nexus = YAML.load_file("./.nexus/nexus.yml")
 
+    ENV['VAGRANT_DEFAULT_PROVIDER'] = nexus["provider"] ||= "virtualbox"
+
     # Box
     config.vm.box = "titon/nexus"
     config.vm.hostname = "nexus"
@@ -14,6 +16,7 @@ Vagrant.configure("2") do |config|
         vb.name = "nexus"
         vb.memory = nexus["memory"] ||= 4096
         vb.cpus = nexus["cpus"] ||= 4
+        vb.customize ["modifyvm", :id, "--ostype", "Ubuntu_64"]
     end
 
     # Network
@@ -27,6 +30,10 @@ Vagrant.configure("2") do |config|
 
     # Add Scripts
     config.vm.synced_folder "./bin/", "/home/vagrant/bin/", :mount_options => ["dmode=777", "fmode=666"]
+    config.vm.synced_folder "./.nexus/", "/home/vagrant/bin-private/", :mount_options => ["dmode=777", "fmode=666"]
+
+    # Before Provision
+    config.vm.provision "before-provision".green, type: "shell", inline: "bash /home/vagrant/bin-private/before-provision.sh"
 
     # Setup Projects
     config.vm.provision "cleanup-nginx".green, type: "shell", inline: "bash /home/vagrant/bin/cleanup-nginx.sh"
@@ -66,6 +73,9 @@ Vagrant.configure("2") do |config|
     # Setup SSH
 
     # Setup Aliases
+
+    # After Provision
+    config.vm.provision "after-provision".green, type: "shell", inline: "bash /home/vagrant/bin-private/after-provision.sh"
 
     # Update Composer
     config.vm.provision "update-composer".green, type: "shell", inline: "/usr/local/bin/composer selfupdate"
