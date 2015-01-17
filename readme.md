@@ -4,10 +4,13 @@ Titon Nexus is an official Vagrant box that provides an easy to use development 
 that comes pre-packaged for HHVM and Hack development. It bundles a built-in web server, 
 popular databases, packaging tools, and more.
 
+The Nexus acts as a central hub for *all* your projects and aims to replace the individual `Vagrantfile` per project scenario. 
+It's bundled with a built-in command line tool that aids in the management of projects, databases, Vagrant, and more.
+
 ## Requirements ##
 
 * Vagrant 1.7
-* VirtualBox
+* VirtualBox 4.3
 * Ruby 1.9
 
 ## Specifications ##
@@ -25,42 +28,183 @@ popular databases, packaging tools, and more.
 
 ## Installation ##
 
-Configure your `Vagrantfile` and use `titon/nexus` as the box.
+Clone the repository to your local machine, preferably in a location where your projects reside, like `~/Sites/`.
 
-```ruby
-Vagrant.configure("2") do |config|
-    config.vm.box = "titon/nexus"
-    config.vm.hostname = "nexus"
-    config.vm.network "private_network", ip: 192.168.13.37
-
-    # Port Forwarding
-    config.vm.network "forwarded_port", guest: 80, host: 8008
-    config.vm.network "forwarded_port", guest: 443, host: 4043
-    config.vm.network "forwarded_port", guest: 3306, host: 30306
-    config.vm.network "forwarded_port", guest: 5432, host: 50432
-
-    # Sync Folders
-    config.vm.synced_folder ".", "/vagrant", :mount_options => ["dmode=777", "fmode=666"]
-end
+```bash
+git clone git@github.com:titon/nexus.git
 ```
 
-Run `vagrant up` and visit `192.168.13.37` in your browser.
+Move into the nexus directory and install the gems required by the command line tool.
 
-## Databases ##
+```bash
+cd nexus/
 
-Both MySQL and PostgreSQL can be accessed with the user `nexus` and the password `secret`. 
-A default database named `nexus` is included.
- 
-If you used the port forwarding configuration above, you should be able to access the databases through tools outside of the box.
+# If you have bundler
+bundle
 
-## Nginx ##
-
-To enable a new nginx website, copy the `/etc/nginx/sites-available/nexus` file and change the following properties: 
-server_name, root, error_log.
-
-Then symlink the file to enable it and restart nginx.
-
+# If you don't
+gem install 'escort'
+gem install 'table_print'
 ```
-sudo ln -fs /etc/nginx/sites-available/YOURSITE /etc/nginx/sites-enabled/YOURSITE
-sudo service nginx restart
+
+Initialize the Nexus environment.
+
+```bash
+./nexus init
 ```
+
+Before you boot up and provision Vagrant for the first time, the Nexus environment will need to be configured. 
+Documentation on how to use the Nexus command line tool and how to configure all the settings can be found below. 
+Help menus can also be accessed from the CLI by passing `--help`.
+
+Once Nexus is configured, boot up Vagrant.
+
+```bash
+./nexus up
+```
+
+You can also stop the Vagrant instance.
+
+```bash
+./nexus down
+```
+
+## Configuration ##
+
+All configuration is stored in the `.nexus/` folder within the repository checkout.
+
+### Projects ###
+
+A project is a website, or library, or simply a folder that will be synced into Vagrant. 
+Once a project is synced, it will be available through nginx.
+
+To add a project, use `nexus project add`. The projects source directory should be passed as the 1st argument.
+
+```bash
+./nexus project add ~/Sites/FooBar/
+```
+
+This command will sync your source directory to the Vagrant `/home/vagrant/FooBar` target directory. 
+To change the target directory name, pass a 2nd argument to the command.
+
+```bash
+./nexus project add ~/Sites/FooBar/ foo-bar
+```
+
+You can customize the nginx hostname by passing a `--hostname` option to the command. 
+If no option is passed, it will fallback to the target directory name + `.app`.
+
+```bash
+./nexus project add ~/Sites/FooBar/ --hostname=foobar.app
+```
+
+If the root of the source directory is not the nginx public webroot, you can pass a relative path to the `--webroot` option.
+
+```bash
+./nexus project add ~/Sites/FooBar/ --hostname=foobar.app --webroot=public/
+```
+
+To list all defined projects, use `nexus project list`.
+
+```bash
+./nexus project list
+```
+
+To delete a project, use `nexus project delete` and pass the hostname as its argument. 
+If you do not know the hostname, use the list command above to find it.
+
+```bash
+./nexus project delete foobar.app
+```
+
+### Environment Variables ###
+
+Environment variables are values that are available through `getenv()` within your PHP or Hack scripts. 
+They are made available through HHVM's FastCGI layer.
+
+To add or update a variable, use `nexus var add`. The variable key should be passed as the 1st argument, and the value the 2nd.
+The `APP_ENV` variable is defined as `local` by default.
+
+```bash
+./nexus var add APP_ENV local
+```
+
+To list all variables, use `nexus var list`.
+
+```bash
+./nexus var list
+```
+
+To delete a variable, use `nexus var delete` and pass the variable key as its argument.
+
+```bash
+./nexus var delete APP_ENV
+```
+
+### Databases ###
+
+A database is simply that, a database. You can configure a list of databases to be automatically created for 
+MySQL and PostgreSQL. 
+
+To create a database, use `nexus db add` and pass the database name. Either the `--mysql` or `--pgsql` option 
+should be passed, depending on which engine you want the database created in.
+
+```bash
+./nexus db add foo --mysql
+```
+
+To list all databases, use `nexus db list`.
+
+```bash
+./nexus db list
+```
+
+To delete a database, use `nexus db delete` and pass the database name as its argument. 
+Please note that this does not actually delete the database from MySQL or PostgreSQL, it simply removes the configuration.
+
+```bash
+./nexus db delete foo
+```
+
+### Importing & Exporting ###
+
+There may be situations where you need to reuse a Nexus configuration across multiple users or computers. 
+This can easily be achieved by importing and exporting the configuration files.
+
+To export the current configuration, use `nexus export`. This will export all configuration files to `~/.nexus`.
+
+```bash
+./nexus export
+```
+
+To import any configuration files found in `~/.nexus`, use `nexus import`.
+
+```bash
+./nexus import
+```
+
+Both of these commands will overwrite existing files, so be careful.
+
+### Provisioning ###
+
+Once configuration has been modified, the Vagrant box will need to be provisioned. 
+If it's the first time Vagrant is booted, use `nexus up`, else use `nexus reload`.
+
+```bash
+./nexus up
+```
+
+The reload command is equivalent to `vagrant reload --provision`.
+
+```bash
+./nexus reload
+```
+
+#### Before & After Provisions ####
+
+To hook into the provisioning process, there are two scripts found in `./.nexus/` that can be modified. 
+They are `after-provision.sh` and `before-provision.sh`.
+
+Both of these scripts will be ran with `bash`.
+
+They will also be exported and imported.

@@ -89,7 +89,7 @@ Escort::App.create do |app|
                 "the project will be synced into the Vagrant users home folder using the source base name.\n\n".yellow +
 
                 "A unique nginx hostname can be provided using the `--hostname` option.\n".yellow +
-                "If no hostname is provided, the base name of the source folder + '.local' will be used.\n\n".yellow +
+                "If no hostname is provided, the base name of the source folder + '.app' will be used.\n\n".yellow +
 
                 "If the root of the source folder is not the public webroot,\n".yellow +
                 "a relative folder path can be provided using the `--webroot` option.".yellow

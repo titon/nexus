@@ -100,7 +100,7 @@ module Titon
                 hostName = hostName.downcase.strip.gsub(" ", "-").gsub(/[^\w\-\.]/, "")
 
                 if hostName.index(".") == nil
-                    hostName += ".local"
+                    hostName += ".app"
                 end
 
                 return hostName
