@@ -9,7 +9,7 @@
 # Nexus v0.0.0 #
 
 Titon Nexus is an official Vagrant box that provides an easy to use development environment 
-that comes pre-packaged for HHVM and Hack development. It bundles a built-in web server, 
+that comes pre-packaged for HHVM, Hack, and PHP development. It bundles a built-in web server, 
 popular databases, packaging tools, and more.
 
 The Nexus acts as a central hub for *all* your projects and aims to replace the individual `Vagrantfile` per project scenario. 
@@ -34,6 +34,13 @@ It's bundled with a built-in command line tool that aids in the management of pr
 * Redis 2.8.4
 * Memcache 1.4.14
 
+## Upcoming Features ##
+
+* SSH key management
+* Bash alias linking
+* More database engines
+* VMWare support
+
 ## Installation ##
 
 Clone the repository to your local machine, preferably in a location where your projects reside, like `~/Sites/`.
@@ -46,16 +53,15 @@ Move into the nexus directory and install the gems required by the command line 
 
 ```bash
 cd nexus/
-
-# If you have bundler
 bundle
+```
 
-# If you don't
+If you don't have Bundler installed, you can install the gems directly.
+
+```bash
 gem install 'escort'
 gem install 'table_print'
-
-# If you are on Windows
-gem install 'win32console'
+gem install 'win32console' # If you are on Windows
 ```
 
 Initialize the Nexus environment.
@@ -74,19 +80,18 @@ Before you boot up and provision Vagrant for the first time, the Nexus environme
 Documentation on how to use the Nexus command line tool and how to configure all the settings can be found below. 
 Help menus can also be accessed from the CLI by passing `--help`.
 
-Once Nexus is configured, boot up Vagrant.
+Once Nexus is configured, boot up Vagrant and wait for it to provision.
 
 ```bash
 nexus up
 ```
 
-You can also stop the Vagrant instance.
+Once complete, direct your browser to `192.168.13.37`. If everything worked correctly, you should see the following splash screen.
+This splash screen will display the current version for each installed technology.
 
-```bash
-nexus down
-```
+![Nexus](https://s3.amazonaws.com/titon/nexus/splash.png)
 
-## Configuration ##
+## Usage ##
 
 All configuration is stored in the `.nexus/` folder within the repository checkout.
 
