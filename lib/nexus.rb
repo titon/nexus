@@ -26,7 +26,7 @@ module Titon
 
             def self.runVagrantCommand(command)
                 Dir.chdir(File.expand_path("../../", __FILE__)) {
-                    puts `vagrant #{command}`
+                    system("vagrant #{command}")
                 }
             end
         end

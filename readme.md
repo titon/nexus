@@ -1,9 +1,9 @@
 ```
- __   __   ______   __  __   __  __   ______    
-/\ '-.\ \ /\  ___\ /\_\_\_\ /\ \/\ \ /\  ___\   
-\ \ \-.  \\ \  __\ \/_/\_\/_\ \ \_\ \\ \___  \  
- \ \_\\ \_\\ \_____\ /\_\/\_\\ \_____\\/\_____\ 
-  \/_/ \/_/ \/_____/ \/_/\/_/ \/_____/ \/_____/ 
+ __   __   ______   __  __   __  __   ______
+/\ '-.\ \ /\  ___\ /\_\_\_\ /\ \/\ \ /\  ___\
+\ \ \-.. \\ \  __\ \/_/\_\/_\ \ \_\ \\ \____ \
+ \ \_\. \_\\ \_____\ /\_\/\_\\ \_____\\/\_____\
+  \/_/ \/_/ \/_____/ \/_/\/_/ \/_____/ \/_____/
 ```
 
 # Nexus v0.0.0 #
@@ -53,12 +53,21 @@ bundle
 # If you don't
 gem install 'escort'
 gem install 'table_print'
+
+# If you are on Windows
+gem install 'win32console'
 ```
 
 Initialize the Nexus environment.
 
 ```bash
-./nexus init
+nexus init
+```
+
+If you are on Windows, you may need to pipe the command through ruby to get it working.
+
+```bash
+ruby nexus init
 ```
 
 Before you boot up and provision Vagrant for the first time, the Nexus environment will need to be configured. 
@@ -68,13 +77,13 @@ Help menus can also be accessed from the CLI by passing `--help`.
 Once Nexus is configured, boot up Vagrant.
 
 ```bash
-./nexus up
+nexus up
 ```
 
 You can also stop the Vagrant instance.
 
 ```bash
-./nexus down
+nexus down
 ```
 
 ## Configuration ##
@@ -89,40 +98,40 @@ Once a project is synced, it will be available through nginx.
 To add a project, use `nexus project add`. The project's source directory should be passed as the 1st argument.
 
 ```bash
-./nexus project add ~/Sites/FooBar/
+nexus project add ~/Sites/FooBar/
 ```
 
 This command will sync your source directory to the Vagrant `/home/vagrant/FooBar` target directory. 
 To change the target directory name, pass a 2nd argument to the command.
 
 ```bash
-./nexus project add ~/Sites/FooBar/ foo-bar
+nexus project add ~/Sites/FooBar/ foo-bar
 ```
 
 You can customize the nginx hostname by passing a `--hostname` option to the command. 
 If no option is passed, it will fallback to the target directory name + `.app`.
 
 ```bash
-./nexus project add ~/Sites/FooBar/ --hostname=foobar.app
+nexus project add ~/Sites/FooBar/ --hostname=foobar.app
 ```
 
 If the root of the source directory is not the nginx public webroot, you can pass a relative path to the `--webroot` option.
 
 ```bash
-./nexus project add ~/Sites/FooBar/ --hostname=foobar.app --webroot=public/
+nexus project add ~/Sites/FooBar/ --hostname=foobar.app --webroot=public/
 ```
 
 To list all defined projects, use `nexus project list`.
 
 ```bash
-./nexus project list
+nexus project list
 ```
 
 To delete a project, use `nexus project delete` and pass the hostname as its argument. 
 If you do not know the hostname, use the list command above to find it.
 
 ```bash
-./nexus project delete foobar.app
+nexus project delete foobar.app
 ```
 
 ### Environment Variables ###
@@ -134,19 +143,19 @@ To add or update a variable, use `nexus var add`. The variable key should be pas
 The `APP_ENV` variable is defined as `local` by default.
 
 ```bash
-./nexus var add APP_ENV local
+nexus var add APP_ENV local
 ```
 
 To list all variables, use `nexus var list`.
 
 ```bash
-./nexus var list
+nexus var list
 ```
 
 To delete a variable, use `nexus var delete` and pass the variable key as its argument.
 
 ```bash
-./nexus var delete APP_ENV
+nexus var delete APP_ENV
 ```
 
 ### Databases ###
@@ -158,20 +167,20 @@ To create a database, use `nexus db add` and pass the database name. Either the 
 should be passed, depending on which engine you want the database created in.
 
 ```bash
-./nexus db add foo --mysql
+nexus db add foo --mysql
 ```
 
 To list all databases, use `nexus db list`.
 
 ```bash
-./nexus db list
+nexus db list
 ```
 
 To delete a database, use `nexus db delete` and pass the database name as its argument. 
 Please note that this does not actually delete the database from MySQL or PostgreSQL, it simply removes the configuration.
 
 ```bash
-./nexus db delete foo
+nexus db delete foo
 ```
 
 ### Importing & Exporting ###
@@ -182,13 +191,13 @@ This can easily be achieved by importing and exporting the configuration files.
 To export the current configuration, use `nexus export`. This will export all configuration files to `~/.nexus`.
 
 ```bash
-./nexus export
+nexus export
 ```
 
 To import any configuration files found in `~/.nexus`, use `nexus import`.
 
 ```bash
-./nexus import
+nexus import
 ```
 
 Both of these commands will overwrite existing files, so be careful.
@@ -199,20 +208,18 @@ Once configuration has been modified, the Vagrant box will need to be provisione
 If it's the first time Vagrant is booted, use `nexus up`, else use `nexus reload`.
 
 ```bash
-./nexus up
+nexus up
 ```
 
 The reload command is equivalent to `vagrant reload --provision`.
 
 ```bash
-./nexus reload
+nexus reload
 ```
 
 #### Before & After Provisions ####
 
-To hook into the provisioning process, there are two scripts found in `./.nexus/` that can be modified. 
+To hook into the provisioning process, there are two scripts found in `.nexus/` that can be modified. 
 They are `after-provision.sh` and `before-provision.sh`.
 
-Both of these scripts will be ran with `bash`.
-
-They will also be exported and imported.
+Both of these scripts will be ran with `bash` when Vagrant is provisioned. They will also be exported and imported.

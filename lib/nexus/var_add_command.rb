@@ -25,7 +25,7 @@ module Titon
                     if var["key"] == arguments[0]
                         append = false
 
-                        yaml["vars"][0]["value"] = arguments[1]
+                        yaml["vars"][i]["value"] = arguments[1]
 
                         break
                     end

@@ -59,6 +59,9 @@ module Titon
                 puts "Target: " + targetPath.yellow + "\n"
                 puts "Webroot: " + webroot.yellow
 
+                puts "\nBe sure to add the hostname to your hosts file\n".cyan
+                puts yaml["ip"] + " " + hostname
+
                 puts "\nRun `nexus reload` to apply your changes".cyan
             end
 
@@ -77,7 +80,7 @@ module Titon
                     raise "Source path must be a directory"
                 end
 
-                return Pathname.new(path).realpath.to_s
+                return Pathname.new(path).realpath.to_s + "/"
             end
 
             def getTargetName(sourcePath)
@@ -115,7 +118,7 @@ module Titon
 
                 webroot = webroot.gsub("\\", "/").gsub(/^\/|\/$/, "")
 
-                if webroot
+                if webroot != ""
                     webroot += "/"
                 end
 

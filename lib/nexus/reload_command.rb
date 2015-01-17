@@ -10,8 +10,6 @@ module Titon
                 puts "Reloading Nexus with configuration changes...\n".green
 
                 Titon::Nexus::Console.runVagrantCommand('reload --provision')
-
-                puts "\nBe sure to add your project hostnames to your hosts file!".cyan
             end
         end
     end

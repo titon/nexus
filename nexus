@@ -6,8 +6,8 @@ require_relative 'lib/nexus'
 banner = <<'BANNER'
  __   __   ______   __  __   __  __   ______
 /\ '-.\ \ /\  ___\ /\_\_\_\ /\ \/\ \ /\  ___\
-\ \ \-.  \\ \  __\ \/_/\_\/_\ \ \_\ \\ \___  \
- \ \_\\ \_\\ \_____\ /\_\/\_\\ \_____\\/\_____\
+\ \ \-.. \\ \  __\ \/_/\_\/_\ \ \_\ \\ \____ \
+ \ \_\. \_\\ \_____\ /\_\/\_\\ \_____\\/\_____\
   \/_/ \/_/ \/_____/ \/_/\/_/ \/_____/ \/_____/
 
 BANNER
@@ -87,7 +87,7 @@ Escort::App.create do |app|
 
         command.action do |options, arguments|
             puts banner
-            puts `#{__FILE__} project --help`
+            puts `ruby #{__FILE__} project --help`
         end
 
         # Add project
@@ -147,7 +147,7 @@ Escort::App.create do |app|
 
         command.action do |options, arguments|
             puts banner
-            puts `#{__FILE__} var --help`
+            puts `ruby #{__FILE__} var --help`
         end
 
         # Add variable
@@ -191,7 +191,7 @@ Escort::App.create do |app|
 
         command.action do |options, arguments|
             puts banner
-            puts `#{__FILE__} db --help`
+            puts `ruby #{__FILE__} db --help`
         end
 
         # Add database
@@ -238,6 +238,6 @@ Escort::App.create do |app|
     # Default action
     app.action do |options, arguments|
         puts banner
-        puts `#{__FILE__} --help`
+        puts `ruby #{__FILE__} --help`
     end
 end
