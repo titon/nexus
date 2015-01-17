@@ -3,6 +3,15 @@
 require 'escort'
 require_relative 'lib/nexus'
 
+banner = <<'BANNER'
+ __   __   ______   __  __   __  __   ______
+/\ '-.\ \ /\  ___\ /\_\_\_\ /\ \/\ \ /\  ___\
+\ \ \-.  \\ \  __\ \/_/\_\/_\ \ \_\ \\ \___  \
+ \ \_\\ \_\\ \_____\ /\_\/\_\\ \_____\\/\_____\
+  \/_/ \/_/ \/_____/ \/_/\/_/ \/_____/ \/_____/
+
+BANNER
+
 Escort::App.create do |app|
     app.version Titon::Nexus::VERSION
     app.summary "Titon Nexus".green
@@ -77,6 +86,7 @@ Escort::App.create do |app|
         command.description "Manage projects by syncing Vagrant folders and creating nginx hosts.".yellow
 
         command.action do |options, arguments|
+            puts banner
             puts `#{__FILE__} project --help`
         end
 
@@ -136,6 +146,7 @@ Escort::App.create do |app|
         command.description "Manage environment variables passed to nginx.".yellow
 
         command.action do |options, arguments|
+            puts banner
             puts `#{__FILE__} var --help`
         end
 
@@ -179,6 +190,7 @@ Escort::App.create do |app|
         command.description "Manage the automatic creation of databases for MySQL and PostgreSQL.".yellow
 
         command.action do |options, arguments|
+            puts banner
             puts `#{__FILE__} db --help`
         end
 
@@ -225,6 +237,7 @@ Escort::App.create do |app|
 
     # Default action
     app.action do |options, arguments|
+        puts banner
         puts `#{__FILE__} --help`
     end
 end

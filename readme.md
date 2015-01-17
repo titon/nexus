@@ -1,4 +1,12 @@
-# Nexus #
+```
+ __   __   ______   __  __   __  __   ______    
+/\ '-.\ \ /\  ___\ /\_\_\_\ /\ \/\ \ /\  ___\   
+\ \ \-.  \\ \  __\ \/_/\_\/_\ \ \_\ \\ \___  \  
+ \ \_\\ \_\\ \_____\ /\_\/\_\\ \_____\\/\_____\ 
+  \/_/ \/_/ \/_____/ \/_/\/_/ \/_____/ \/_____/ 
+```
+
+# Nexus v0.0.0 #
 
 Titon Nexus is an official Vagrant box that provides an easy to use development environment 
 that comes pre-packaged for HHVM and Hack development. It bundles a built-in web server, 
@@ -78,7 +86,7 @@ All configuration is stored in the `.nexus/` folder within the repository checko
 A project is a website, or library, or simply a folder that will be synced into Vagrant. 
 Once a project is synced, it will be available through nginx.
 
-To add a project, use `nexus project add`. The projects source directory should be passed as the 1st argument.
+To add a project, use `nexus project add`. The project's source directory should be passed as the 1st argument.
 
 ```bash
 ./nexus project add ~/Sites/FooBar/
