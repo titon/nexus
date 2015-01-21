@@ -28,6 +28,20 @@ Vagrant.configure("2") do |config|
     config.vm.network "forwarded_port", guest: 3306, host: 30306
     config.vm.network "forwarded_port", guest: 5432, host: 50432
 
+    # Setup SSH
+    #config.ssh.private_key_path = nexus["keys"]
+    #config.ssh.forward_agent = true
+
+    # Setup Aliases
+    aliasPath = File.expand_path(nexus["aliases"])
+
+    if File.exist?(aliasPath)
+        config.vm.provision "copy-aliases".green, type: "shell" do |pv|
+            pv.inline = "echo \"$1\" > /home/vagrant/.bash_aliases"
+            pv.args = [ File.read(aliasPath) ]
+        end
+    end
+
     # Add Scripts
     config.vm.synced_folder "./bin/", "/home/vagrant/bin/", :mount_options => ["dmode=777", "fmode=666"]
     config.vm.synced_folder "./.nexus/", "/home/vagrant/bin-private/", :mount_options => ["dmode=777", "fmode=666"]
@@ -69,10 +83,6 @@ Vagrant.configure("2") do |config|
             pv.args = [ db["name"] ]
         end
     end
-
-    # Setup SSH
-
-    # Setup Aliases
 
     # After Provision
     config.vm.provision "after-provision".green, type: "shell", inline: "bash /home/vagrant/bin-private/after-provision.sh"

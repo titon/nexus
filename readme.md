@@ -37,7 +37,6 @@ It's bundled with a built-in command line tool that aids in the management of pr
 ## Upcoming Features ##
 
 * SSH key management
-* Bash alias linking
 * More database engines
 * VMWare support
 
