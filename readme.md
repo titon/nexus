@@ -6,7 +6,7 @@
   \/_/ \/_/ \/_____/ \/_/\/_/ \/_____/ \/_____/
 ```
 
-# Nexus v0.1.0 #
+# Nexus v0.2.0 #
 
 Titon Nexus is an official Vagrant box that provides an easy to use development environment 
 that comes pre-packaged for HHVM, Hack, and PHP development. It bundles a built-in web server, 
