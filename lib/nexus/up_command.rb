@@ -9,7 +9,7 @@ module Titon
 
                 puts "Starting Vagrant...\n".green
 
-                Titon::Nexus::Console.runVagrantCommand('up')
+                Titon::Nexus::Console.runVagrantCommand("up")
             end
         end
     end

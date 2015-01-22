@@ -3,13 +3,12 @@
 # Vagrant
 provider: virtualbox
 ip: 192.168.13.37
-memory: 4096
-cpus: 4
+memory: 2048
+cpus: 2
 aliases: ~/.bash_aliases
 
-# Authentication
-auth: ~/.ssh/id_rsa.pub
-keys:
+# SSH Keys
+ssh:
   - ~/.ssh/id_rsa
 
 # Environment Variables

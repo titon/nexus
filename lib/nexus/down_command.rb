@@ -4,7 +4,7 @@ module Titon
             def execute
                 puts "Stopping Vagrant...\n".green
 
-                Titon::Nexus::Console.runVagrantCommand('halt')
+                Titon::Nexus::Console.runVagrantCommand("halt")
             end
         end
     end

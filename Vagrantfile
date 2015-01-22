@@ -12,6 +12,7 @@ Vagrant.configure("2") do |config|
     config.vm.box = "titon/nexus"
     config.vm.hostname = "nexus"
 
+    # Provider
     config.vm.provider "virtualbox" do |vb|
         vb.name = "nexus"
         vb.memory = nexus["memory"] ||= 4096
@@ -29,15 +30,15 @@ Vagrant.configure("2") do |config|
     config.vm.network "forwarded_port", guest: 5432, host: 50432
 
     # Setup SSH
-    #config.ssh.private_key_path = nexus["keys"]
-    #config.ssh.forward_agent = true
+    config.ssh.private_key_path = nexus["ssh"] ||= "~/.ssh/id_rsa"
+    config.ssh.forward_agent = true
 
     # Setup Aliases
     aliasPath = File.expand_path(nexus["aliases"])
 
     if File.exist?(aliasPath)
         config.vm.provision "copy-aliases".green, type: "shell" do |pv|
-            pv.inline = "echo \"$1\" > /home/vagrant/.bash_aliases"
+            pv.inline = "bash /home/vagrant/bin/add-aliases.sh \"$1\""
             pv.args = [ File.read(aliasPath) ]
         end
     end

@@ -37,6 +37,22 @@ Escort::App.create do |app|
         end
     end
 
+    # Configuration
+    app.command :config do |command|
+        command.summary "Configuration".green
+        command.description "Modify individual configuration settings. The following settings are available:\n\n".yellow +
+            "    provider - The Vagrant box provider, usually virtualbox (default) or vmware\n".yellow +
+            "    ip - The IP address of the Vagrant box (defaults to 192.168.13.37)\n".yellow +
+            "    memory - The amount of memory on the Vagrant box (defaults to 2048)\n".yellow +
+            "    cpus - The amount of CPUs on the Vagrant box (defaults to 2)\n".yellow +
+            "    aliases - The aliases file to sync with .bash_aliases in Vagrant (defaults to ~/.bash_aliases)\n\n".yellow +
+            "The setting name should be passed as the 1st argument and the new value as the 2nd argument.".yellow
+
+        command.action do |options, arguments|
+            Titon::Nexus::ConfigCommand.new(options, arguments).execute
+        end
+    end
+
     # Export
     app.command :export do |command|
         command.summary "Export configuration".green

@@ -9,7 +9,7 @@ module Titon
 
                 puts "Reloading Nexus with configuration changes...\n".green
 
-                Titon::Nexus::Console.runVagrantCommand('reload --provision')
+                Titon::Nexus::Console.runVagrantCommand("reload --provision")
             end
         end
     end
