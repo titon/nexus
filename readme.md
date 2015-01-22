@@ -6,7 +6,7 @@
   \/_/ \/_/ \/_____/ \/_/\/_/ \/_____/ \/_____/
 ```
 
-# Nexus v0.0.0 #
+# Nexus v0.1.0 #
 
 Titon Nexus is an official Vagrant box that provides an easy to use development environment 
 that comes pre-packaged for HHVM, Hack, and PHP development. It bundles a built-in web server, 
@@ -15,13 +15,13 @@ popular databases, packaging tools, and more.
 The Nexus acts as a central hub for *all* your projects and aims to replace the individual `Vagrantfile` per project scenario. 
 It's bundled with a built-in command line tool that aids in the management of projects, databases, Vagrant, and more.
 
-## Requirements ##
+## Minimum Requirements ##
 
 * Vagrant 1.7
 * VirtualBox 4.3
 * Ruby 1.9
 
-## Specifications ##
+## Box Specifications ##
 
 * Ubuntu 14.04
 * HHVM Nightly 3.5.0 (PHP 5.6)
@@ -93,6 +93,24 @@ This splash screen will display the current version for each installed technolog
 ## Usage ##
 
 All configuration is stored in the `.nexus/` folder within the repository checkout.
+
+### Settings ###
+
+Configuration settings are used in customizing the Vagrant box. The defaults will satisfy most use cases, 
+but if you really want to change them, you can.
+
+To change a setting, use `nexus config update`. The setting's name should be passed as the 1st argument 
+and the new value as the 2nd.
+
+```bash
+nexus config update ip 192.168.13.37
+```
+
+For a list of customizable settings, use `nexus config list`, or view the help menu.
+
+```bash
+nexus config list
+```
 
 ### Projects ###
 

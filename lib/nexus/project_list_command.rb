@@ -13,7 +13,7 @@ module Titon
 
                 puts "Projects\n".green
 
-                tp yaml["projects"]
+                tp(yaml["projects"])
             end
         end
     end

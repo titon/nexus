@@ -2,7 +2,7 @@ require "resolv"
 
 module Titon
     module Nexus
-        class ConfigCommand < ::Escort::ActionCommand::Base
+        class ConfigUpdateCommand < ::Escort::ActionCommand::Base
             def execute
                 if !arguments[0]
                     puts "Setting name required".red
@@ -43,7 +43,7 @@ module Titon
 
                 Titon::Nexus::Console.updateYamlConfig(yaml.to_yaml)
 
-                puts "Updated ".green + key.yellow + " configuration\n".green
+                puts "Updated ".green + key.yellow + " setting\n".green
 
                 puts "Run `nexus reload` to apply your changes".cyan
             end

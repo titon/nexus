@@ -45,11 +45,33 @@ Escort::App.create do |app|
             "    ip - The IP address of the Vagrant box (defaults to 192.168.13.37)\n".yellow +
             "    memory - The amount of memory on the Vagrant box (defaults to 2048)\n".yellow +
             "    cpus - The amount of CPUs on the Vagrant box (defaults to 2)\n".yellow +
-            "    aliases - The aliases file to sync with .bash_aliases in Vagrant (defaults to ~/.bash_aliases)\n\n".yellow +
-            "The setting name should be passed as the 1st argument and the new value as the 2nd argument.".yellow
+            "    aliases - The aliases file to sync with .bash_aliases in Vagrant (defaults to ~/.bash_aliases)".yellow
 
         command.action do |options, arguments|
-            Titon::Nexus::ConfigCommand.new(options, arguments).execute
+            puts banner
+            puts `ruby #{__FILE__} config --help`
+        end
+
+        # Update setting
+        command.command :update do |command|
+            command.summary "Update a setting".green
+
+            command.description "Update a setting. The 1st argument is the name, and the 2nd argument is the new value.".yellow
+
+            command.action do |options, arguments|
+                Titon::Nexus::ConfigUpdateCommand.new(options, arguments).execute
+            end
+        end
+
+        # List settings
+        command.command :list do |command|
+            command.summary "List settings".green
+
+            command.description "List all settings that have been configured.".yellow
+
+            command.action do |options, arguments|
+                Titon::Nexus::ConfigListCommand.new(options, arguments).execute
+            end
         end
     end
 

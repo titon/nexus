@@ -13,7 +13,7 @@ module Titon
 
                 puts "Databases\n".green
 
-                tp yaml["databases"]
+                tp(yaml["databases"])
             end
         end
     end

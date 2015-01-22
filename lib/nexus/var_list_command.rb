@@ -13,7 +13,7 @@ module Titon
 
                 puts "Environment Variables\n".green
 
-                tp yaml["vars"]
+                tp(yaml["vars"])
             end
         end
     end
