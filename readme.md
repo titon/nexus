@@ -42,7 +42,18 @@ It's bundled with a built-in command line tool that aids in the management of pr
 
 ## Installation ##
 
-Clone the repository to your local machine, preferably in a location where your projects reside, like `~/Sites/`.
+There are two ways in using the [Nexus box](https://atlas.hashicorp.com/titon/boxes/nexus). 
+The first approach is using the box directly in your `Vagrantfile` with the box name set to `titon/nexus`. 
+This approach allows for more granular hands on control.
+
+```ruby
+Vagrant.configure("2") do |config|
+    config.vm.box = "titon/nexus"
+end
+```
+
+The second approach is through the Nexus hub, which is an all-in-one command line tool for managing multiple projects.
+To begin, clone the repository to your local machine, preferably in a location where your projects reside, like `~/Sites/`.
 
 ```bash
 git clone git@github.com:titon/nexus.git
