@@ -258,3 +258,39 @@ To hook into the provisioning process, there are two scripts found in `.nexus/` 
 They are `after-provision.sh` and `before-provision.sh`.
 
 Both of these scripts will be ran with `bash` when Vagrant is provisioned. They will also be exported and imported.
+
+## Port Forwarding ##
+
+The following ports have been forwarded to allow guest box access.
+
+<table>
+    <thead>
+        <tr>
+            <td>Tech</td>
+            <td>Forwarded To</td>
+            <td>Port</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>HTTP</td>
+            <td>8008</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td>HTTPS</td>
+            <td>4043</td>
+            <td>443</td>
+        </tr>
+        <tr>
+            <td>MySQL</td>
+            <td>30306</td>
+            <td>3306</td>
+        </tr>
+        <tr>
+            <td>PostgreSQL</td>
+            <td>50432</td>
+            <td>5432</td>
+        </tr>
+    </tbody>
+</table>
