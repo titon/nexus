@@ -216,6 +216,8 @@ Please note that this does not actually delete the database from MySQL or Postgr
 nexus db delete foo
 ```
 
+The `nexus` user, with password `secret`, can be used to connect to either databases.
+
 ### Importing & Exporting ###
 
 There may be situations where you need to reuse a Nexus configuration across multiple users or computers. 
