@@ -6,7 +6,7 @@
   \/_/ \/_/ \/_____/ \/_/\/_/ \/_____/ \/_____/
 ```
 
-# Nexus v0.2.0 #
+# Titon Nexus v0.3.0 #
 
 Titon Nexus is an official Vagrant box that provides an easy to use development environment that comes pre-packaged for HHVM, Hack, and PHP development. It bundles a built-in web server, popular databases, packaging tools, and more.
 
@@ -21,15 +21,20 @@ The Nexus acts as a central hub for *all* your projects and aims to replace the 
 ## Box Specifications ##
 
 * Ubuntu 14.04
-* HHVM Nightly 3.5.0 (PHP 5.6)
+* HHVM Nightly 3.6.0-dev (PHP 5.6)
 * Composer 1.0
 * Nginx 1.6.2
-* MariaDB 10.0.15 (MySQL)
-* PostgreSQL 9.3.5
-* Node.js 0.10.25
-* NPM 1.3.10
+* MariaDB 10.0.17 (MySQL)
+* PostgreSQL 9.3.6
+* Node.js 0.12.0
+* NPM 2.5.1
 * Redis 2.8.4
 * Memcache 1.4.14
+
+Additional functionality:
+
+* Uses NVM for Node.js version management
+* Enables Zend compatibility mode for HHVM
 
 ## Upcoming Features ##
 
