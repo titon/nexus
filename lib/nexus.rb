@@ -1,7 +1,7 @@
 Dir[File.dirname(__FILE__) + "/nexus/*.rb"].each { |file| require file }
 
 require "yaml"
-require_relative "colors"
+require_relative "string"
 
 module Titon
     module Nexus

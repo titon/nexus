@@ -15,12 +15,12 @@ BANNER
 Escort::App.create do |app|
     app.version Titon::Nexus::VERSION
     app.summary "Titon Nexus".green
-    app.description "A Vagrant development environment with built-in project management.".yellow
+    app.description "A Vagrant development environment with built-in project management.".to_desc
 
     # Initialization
     app.command :init do |command|
         command.summary "Initialize Nexus".green
-        command.description "Initialize the Nexus environment by creating all required configuration files.".yellow
+        command.description "Initialize the Nexus environment by creating all required configuration files.".to_desc
 
         command.action do |options, arguments|
             Titon::Nexus::InitCommand.new(options, arguments).execute
@@ -30,7 +30,7 @@ Escort::App.create do |app|
     # Reload
     app.command :reload do |command|
         command.summary "Reload Nexus".green
-        command.description "Reload the Nexus configuration by re-provisioning the Vagrant instance.".yellow
+        command.description "Reload the Nexus configuration by re-provisioning the Vagrant instance.".to_desc
 
         command.action do |options, arguments|
             Titon::Nexus::ReloadCommand.new(options, arguments).execute
@@ -40,12 +40,12 @@ Escort::App.create do |app|
     # Configuration
     app.command :config do |command|
         command.summary "Configuration".green
-        command.description "Modify individual configuration settings. The following settings are available:\n\n".yellow +
-            "    provider - The Vagrant box provider, usually virtualbox (default) or vmware\n".yellow +
-            "    ip - The IP address of the Vagrant box (defaults to 192.168.13.37)\n".yellow +
-            "    memory - The amount of memory on the Vagrant box (defaults to 2048)\n".yellow +
-            "    cpus - The amount of CPUs on the Vagrant box (defaults to 2)\n".yellow +
-            "    aliases - The aliases file to sync with .bash_aliases in Vagrant (defaults to ~/.bash_aliases)".yellow
+        command.description "Modify individual configuration settings. The following settings are available:".to_desc + "\n\n" +
+            "• provider - The Vagrant box provider, usually virtualbox (default) or vmware".to_desc + "\n" +
+            "• ip - The IP address of the Vagrant box (defaults to 192.168.13.37)".to_desc + "\n" +
+            "• memory - The amount of memory on the Vagrant box (defaults to 2048)".to_desc + "\n" +
+            "• cpus - The amount of CPUs on the Vagrant box (defaults to 2)".to_desc + "\n" +
+            "• aliases - The aliases file to sync with .bash_aliases in Vagrant (defaults to ~/.bash_aliases)".to_desc
 
         command.action do |options, arguments|
             puts banner
@@ -55,8 +55,7 @@ Escort::App.create do |app|
         # Update setting
         command.command :update do |command|
             command.summary "Update a setting".green
-
-            command.description "Update a setting. The 1st argument is the name, and the 2nd argument is the new value.".yellow
+            command.description "Update a setting. The 1st argument is the name, and the 2nd argument is the new value.".to_desc
 
             command.action do |options, arguments|
                 Titon::Nexus::ConfigUpdateCommand.new(options, arguments).execute
@@ -66,8 +65,7 @@ Escort::App.create do |app|
         # List settings
         command.command :list do |command|
             command.summary "List settings".green
-
-            command.description "List all settings that have been configured.".yellow
+            command.description "List all settings that have been configured.".to_desc
 
             command.action do |options, arguments|
                 Titon::Nexus::ConfigListCommand.new(options, arguments).execute
@@ -78,9 +76,8 @@ Escort::App.create do |app|
     # Export
     app.command :export do |command|
         command.summary "Export configuration".green
-        command.description "Export the Nexus configuration to your home directory. ".yellow +
-            "This allows configuration to be imported at a later time.\n\n".yellow +
-            "Exporting configuration will overwrite any previously exported configuration!".yellow
+        command.description "Export the Nexus configuration to your user home directory. This allows configuration to be imported at a later time.".to_desc + "\n\n" +
+            "Exporting configuration will overwrite any previously exported configuration!".to_desc
 
         command.action do |options, arguments|
             Titon::Nexus::ExportCommand.new(options, arguments).execute
@@ -90,8 +87,8 @@ Escort::App.create do |app|
     # Import
     app.command :import do |command|
         command.summary "Import configuration".green
-        command.description "Import any Nexus configuration from your home directory into this installation.\n\n".yellow +
-            "Importing configuration will overwrite any previously defined configuration!".yellow
+        command.description "Import any Nexus configuration from your home directory into this installation.".to_desc + "\n\n" +
+            "Importing configuration will overwrite any previously defined configuration!".to_desc
 
         command.action do |options, arguments|
             Titon::Nexus::ImportCommand.new(options, arguments).execute
@@ -101,7 +98,7 @@ Escort::App.create do |app|
     # Up
     app.command :up do |command|
         command.summary "Start Vagrant".green
-        command.description "Start up the Vagrant instance.".yellow
+        command.description "Start up the Vagrant instance.".to_desc
 
         command.action do |options, arguments|
             Titon::Nexus::UpCommand.new(options, arguments).execute
@@ -111,17 +108,17 @@ Escort::App.create do |app|
     # Down
     app.command :down do |command|
         command.summary "Stop Vagrant".green
-        command.description "Shutdown the Vagrant instance.".yellow
+        command.description "Shutdown the Vagrant instance.".to_desc
 
         command.action do |options, arguments|
             Titon::Nexus::DownCommand.new(options, arguments).execute
         end
     end
 
-    # Project management
+    # Project Management
     app.command :project do |command|
         command.summary "Manage projects".green
-        command.description "Manage projects by syncing Vagrant folders and creating nginx hosts.".yellow
+        command.description "Manage projects by syncing Vagrant folders and creating nginx hosts.".to_desc
 
         command.action do |options, arguments|
             puts banner
@@ -131,16 +128,9 @@ Escort::App.create do |app|
         # Add project
         command.command :add do |command|
             command.summary "Add a new project".green
-
-            command.description "Add a new project by providing the source folder as the 1st argument,\n".yellow +
-                "and an optional destination name as the 2nd argument. If no destination name is provided,\n".yellow +
-                "the project will be synced into the Vagrant users home folder using the source base name.\n\n".yellow +
-
-                "A unique nginx hostname can be provided using the `--hostname` option.\n".yellow +
-                "If no hostname is provided, the base name of the source folder + '.app' will be used.\n\n".yellow +
-
-                "If the root of the source folder is not the public webroot,\n".yellow +
-                "a relative folder path can be provided using the `--webroot` option.".yellow
+            command.description "Add a new project by providing the source folder as the 1st argument, and an optional destination name as the 2nd argument. If no destination name is provided, the project will be synced into the Vagrant users home folder using the source base name.".to_desc + "\n\n" +
+                "A unique nginx hostname can be provided using the `--hostname` option. If no hostname is provided, the base name of the source folder + '.app' will be used.".to_desc + "\n\n" +
+                "If the root of the source folder is not the public webroot, a relative folder path can be provided using the `--webroot` option.".to_desc
 
             command.options do |opts|
                 opts.opt :hostname, "Hostname to use for nginx".green, :short => '-h', :long => '--hostname', :type => :string
@@ -155,11 +145,8 @@ Escort::App.create do |app|
         # Delete project
         command.command :delete do |command|
             command.summary "Delete a project".green
-
-            command.description "Delete an existing project by unsyncing the Vagrant destination folder,\n".yellow +
-                "removing the nginx virtual host, and removing the YAML configuration.\n\n".yellow +
-
-                "The hostname of the project to delete should be passed as the 1st argument.".yellow
+            command.description "Delete an existing project by unsyncing the Vagrant destination folder, removing the nginx virtual host, and removing the YAML configuration.".to_desc + "\n\n" +
+                "The hostname of the project to delete should be passed as the 1st argument.".to_desc
 
             command.action do |options, arguments|
                 Titon::Nexus::ProjectDeleteCommand.new(options, arguments).execute
@@ -169,8 +156,7 @@ Escort::App.create do |app|
         # List projects
         command.command :list do |command|
             command.summary "List projects".green
-
-            command.description "List all projects that have been synced.".yellow
+            command.description "List all projects that have been synced.".to_desc
 
             command.action do |options, arguments|
                 Titon::Nexus::ProjectListCommand.new(options, arguments).execute
@@ -178,10 +164,10 @@ Escort::App.create do |app|
         end
     end
 
-    # Environment variables
+    # Environment Variables
     app.command :var do |command|
         command.summary "Manage environment variables".green
-        command.description "Manage environment variables passed to nginx.".yellow
+        command.description "Manage environment variables passed to nginx.".to_desc
 
         command.action do |options, arguments|
             puts banner
@@ -191,8 +177,7 @@ Escort::App.create do |app|
         # Add variable
         command.command :add do |command|
             command.summary "Add or update a variable".green
-
-            command.description "Add or update an environment variable. The 1st argument is the key, and the 2nd argument is the value.".yellow
+            command.description "Add or update an environment variable. The 1st argument is the key, and the 2nd argument is the value.".to_desc
 
             command.action do |options, arguments|
                 Titon::Nexus::VarAddCommand.new(options, arguments).execute
@@ -202,8 +187,7 @@ Escort::App.create do |app|
         # Delete variable
         command.command :delete do |command|
             command.summary "Delete variable".green
-
-            command.description "Delete an environment variable defined by key. The key name should be passed as the 1st argument.".yellow
+            command.description "Delete an environment variable defined by key. The key name should be passed as the 1st argument.".to_desc
 
             command.action do |options, arguments|
                 Titon::Nexus::VarDeleteCommand.new(options, arguments).execute
@@ -213,8 +197,7 @@ Escort::App.create do |app|
         # List variables
         command.command :list do |command|
             command.summary "List variables".green
-
-            command.description "List all defined environment variables.".yellow
+            command.description "List all defined environment variables.".to_desc
 
             command.action do |options, arguments|
                 Titon::Nexus::VarListCommand.new(options, arguments).execute
@@ -225,7 +208,7 @@ Escort::App.create do |app|
     # Databases
     app.command :db do |command|
         command.summary "Manage databases".green
-        command.description "Manage the automatic creation of databases for MySQL and PostgreSQL.".yellow
+        command.description "Manage the automatic creation of databases for MySQL and PostgreSQL.".to_desc
 
         command.action do |options, arguments|
             puts banner
@@ -235,9 +218,7 @@ Escort::App.create do |app|
         # Add database
         command.command :add do |command|
             command.summary "Add database".green
-
-            command.description "Add a new database that will be automatically created on the next Vagrant reload.\n".yellow +
-                "The database name should be passed as the 1st argument.".yellow
+            command.description "Add a new database that will be automatically created on the next Vagrant reload. The database name should be passed as the 1st argument.".to_desc
 
             command.options do |opts|
                 opts.opt :mysql, "Is MySQL".green, :short => '-m', :long => '--mysql', :type => :boolean, :default => false
@@ -252,9 +233,7 @@ Escort::App.create do |app|
         # Delete database
         command.command :delete do |command|
             command.summary "Delete database".green
-
-            command.description "Delete a database from the configuration. This DOES NOT delete the actual database.\n".yellow +
-                "The database name should be passed as the 1st argument.".yellow
+            command.description "Delete a database from the configuration. This DOES NOT delete the actual database. The database name should be passed as the 1st argument.".to_desc
 
             command.action do |options, arguments|
                 Titon::Nexus::DbDeleteCommand.new(options, arguments).execute
@@ -264,8 +243,7 @@ Escort::App.create do |app|
         # List databases
         command.command :list do |command|
             command.summary "List databases".green
-
-            command.description "List all configured databases.".yellow
+            command.description "List all configured databases.".to_desc
 
             command.action do |options, arguments|
                 Titon::Nexus::DbListCommand.new(options, arguments).execute

@@ -29,4 +29,28 @@ class String
             return "\033[#{code}m#{self}\033[0m"
         end
     end
+
+    def to_desc()
+        return self.word_wrap.yellow
+    end
+
+    def word_wrap(width = 80)
+        width = ENV['COLUMNS'] || width
+        length = 0
+        output = ""
+
+        self.scan(/\S+/).each do |w|
+            output += w
+            length += w.length
+
+            if length >= width
+                output += "\n"
+                length = 0
+            else
+                output += " "
+            end
+        end
+
+        return output
+    end
 end
