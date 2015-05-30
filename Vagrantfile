@@ -30,8 +30,8 @@ Vagrant.configure("2") do |config|
     config.vm.network "forwarded_port", guest: 5432, host: 50432
 
     # Setup SSH
-    #config.ssh.private_key_path = nexus["ssh"] ||= "~/.ssh/id_rsa"
-    #config.ssh.forward_agent = true
+    # config.ssh.private_key_path = nexus["ssh"] ||= "~/.ssh/id_rsa"
+    # config.ssh.forward_agent = true
 
     # Setup Aliases
     aliasPath = File.expand_path(nexus["aliases"])
