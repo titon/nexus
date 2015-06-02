@@ -41,11 +41,11 @@ Escort::App.create do |app|
     app.command :config do |command|
         command.summary "Configuration".green
         command.description "Modify individual configuration settings. The following settings are available:".to_desc + "\n\n" +
-            "• provider - The Vagrant box provider, usually virtualbox (default) or vmware".to_desc + "\n" +
-            "• ip - The IP address of the Vagrant box (defaults to 192.168.13.37)".to_desc + "\n" +
-            "• memory - The amount of memory on the Vagrant box (defaults to 2048)".to_desc + "\n" +
-            "• cpus - The amount of CPUs on the Vagrant box (defaults to 2)".to_desc + "\n" +
-            "• aliases - The aliases file to sync with .bash_aliases in Vagrant (defaults to ~/.bash_aliases)".to_desc
+            "* provider - The Vagrant box provider, usually virtualbox (default) or vmware".to_desc + "\n" +
+            "* ip - The IP address of the Vagrant box (defaults to 192.168.13.37)".to_desc + "\n" +
+            "* memory - The amount of memory on the Vagrant box (defaults to 2048)".to_desc + "\n" +
+            "* cpus - The amount of CPUs on the Vagrant box (defaults to 2)".to_desc + "\n" +
+            "* aliases - The aliases file to sync with .bash_aliases in Vagrant (defaults to ~/.bash_aliases)".to_desc
 
         command.action do |options, arguments|
             puts banner

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "yaml"
-require_relative "lib/colors"
+require_relative "lib/string"
 
 Vagrant.configure("2") do |config|
     nexus = YAML.load_file("./.nexus/nexus.yml")
